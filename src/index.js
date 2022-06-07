@@ -19,14 +19,20 @@ if (argv.includes('--dev')) {
 
 if (argv.includes('--build')) {
   process.env.NODE_ENV = 'build'
-  spawn('node', [path.join(__dirname, './prod.js')], {
+  spawn('node', [path.join(__dirname, './prod.js'), ...argv], {
     stdio: 'inherit',
   })
 }
 
 if (argv.includes('--analyzer')) {
   process.env.NODE_ENV = 'build'
-  spawn('node', [path.join(__dirname, './analyzer.js')], {
+  spawn('node', [path.join(__dirname, './analyzer.js'), ...argv], {
+    stdio: 'inherit',
+  })
+}
+
+if (argv.includes('--init')) {
+  spawn('node', [path.join(__dirname, './init/index.js'), ...argv], {
     stdio: 'inherit',
   })
 }
