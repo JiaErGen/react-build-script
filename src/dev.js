@@ -15,7 +15,6 @@ const customOptions = require(path.join(cwd, 'react-build-script.js'))
 
 const compiler = webpack(devConfig)
 const devServerOptions = {
-  ...customOptions,
   client: {
     logging: 'info',
     overlay: true, // 浏览器显示错误
@@ -28,6 +27,7 @@ const devServerOptions = {
   port: 9000, // 端口号
   compress: true, // 开启gzip压缩
   static: false, // 静态资源的本地路径
+  ...customOptions,
 }
 
 const server = new WebpackDevServer(devServerOptions, compiler)
