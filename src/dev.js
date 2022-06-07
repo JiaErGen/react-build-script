@@ -9,9 +9,13 @@ const devConfig = require('./webpack/webpack.dev')
 const { spawn } = require('cross-spawn')
 const path = require('path')
 
+const cwd = process.cwd()
+
+const customOptions = require(path.join(cwd, 'react-build-script.js'))
+
 const compiler = webpack(devConfig)
 const devServerOptions = {
-  host: 'localhost.vrtbbs.com',
+  ...customOptions,
   client: {
     logging: 'info',
     overlay: true, // 浏览器显示错误
@@ -24,24 +28,6 @@ const devServerOptions = {
   port: 9000, // 端口号
   compress: true, // 开启gzip压缩
   static: false, // 静态资源的本地路径
-  proxy: {
-    // 配置代理
-    '/ums': {
-      // pathRewrite: {'^/api' : ''},
-      // target: 'http://yupao-develop-intranet.vrtbbs.com/',
-      target: 'http://yupao-develop.vrtbbs.com',
-      //target: 'http://localhost:8080/',
-      // target: 'https://yupao-test.vrtbbs.com/',
-      changeOrigin: true, // target是域名的话，需要这个参数，
-      secure: false, // 不检查安全问题。 设置后，可以接受运行在 HTTPS 上，可以使用无效证书的后端服务器
-    },
-    '/uaa': {
-      // target: 'http://yupao-develop-intranet.vrtbbs.com/',
-      target: 'http://yupao-develop.vrtbbs.com',
-      changeOrigin: true, // target是域名的话，需要这个参数，
-      secure: false, // 不检查安全问题。 设置后，可以接受运行在 HTTPS 上，可以使用无效证书的后端服务器
-    },
-  },
 }
 
 const server = new WebpackDevServer(devServerOptions, compiler)

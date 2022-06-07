@@ -4,9 +4,9 @@ const webpackConfig = require('./webpack.common')
 module.exports = merge(webpackConfig, {
   cache: {
     type: 'filesystem',
-    buildDependencies: {
-      config: [__filename]
-    }
+    // buildDependencies: {
+    //   config: [__filename]
+    // }
   },
   mode: 'development',
   devtool: 'inline-source-map',
